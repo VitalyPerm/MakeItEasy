@@ -26,13 +26,12 @@ fun SampleDataDetails(data: SampleData) {
         modifier = Modifier
             .fillMaxWidth()
     ) {
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp)
                 .background(Purple500),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            contentAlignment = Alignment.Center
         ) {
             Text(
                 text = "Make It East List Detail",

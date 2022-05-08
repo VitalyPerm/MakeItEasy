@@ -8,6 +8,11 @@ fun showToast(context: Context, text: String) {
 }
 
 
+fun getJsonFromAsset(context: Context, data: String): String {
+    return context.assets.open(data).bufferedReader().use { it.readText() }
+}
+
+
 
 
 

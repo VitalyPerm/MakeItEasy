@@ -1,6 +1,5 @@
-package com.elvitalya.makeiteasy.view
+package com.elvitalya.makeiteasy.view.sample_list
 
-import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -21,10 +20,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.elvitalya.makeiteasy.Screens
 import com.elvitalya.makeiteasy.R
-import com.elvitalya.makeiteasy.view.sample_list.SampleData
+import com.elvitalya.makeiteasy.Screens
 import com.elvitalya.makeiteasy.ui.theme.Purple500
+import com.elvitalya.makeiteasy.utils.getJsonFromAsset
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -39,17 +38,15 @@ fun SampleList(navController: NavController) {
 
     Column(
         modifier = Modifier
-            .fillMaxSize()
             .background(Color.White)
             .wrapContentSize(Alignment.Center)
     ) {
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp)
                 .background(Purple500),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+           contentAlignment = Alignment.Center
         ) {
             Text(
                 text = "Make It Easy",
@@ -119,8 +116,4 @@ fun SampleDataListItem(data: SampleData, navController: NavController) {
         }
     }
 
-}
-
-fun getJsonFromAsset(context: Context, data: String): String {
-    return context.assets.open(data).bufferedReader().use { it.readText() }
 }

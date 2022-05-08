@@ -23,7 +23,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.elvitalya.makeiteasy.view.SampleList
+import com.elvitalya.makeiteasy.view.sample_list.SampleList
+import com.elvitalya.makeiteasy.view.grid.GridData
+import com.elvitalya.makeiteasy.view.grid.GridDetails
+import com.elvitalya.makeiteasy.view.grid.SampleGrid
 import com.elvitalya.makeiteasy.view.login_screen.LoginScreen
 import com.elvitalya.makeiteasy.view.login_screen.RegisterScreen
 import com.elvitalya.makeiteasy.view.sample_list.SampleData
@@ -51,6 +54,7 @@ fun Navigation() {
         composable(Screens.SampleData.route) {
             SampleList(navController = navController)
         }
+
         composable("${Screens.SampleDetail.route}/{item}",
             arguments = listOf(
                 navArgument("item") {
@@ -60,6 +64,22 @@ fun Navigation() {
             backStackEntry.arguments?.getString("item")?.let { json ->
                 val item = Gson().fromJson(json, SampleData::class.java)
                 SampleDataDetails(data = item)
+            }
+        }
+
+        composable(Screens.GridData.route) {
+            SampleGrid(navController = navController)
+        }
+
+        composable("${Screens.GridDetail.route}/{item}",
+            arguments = listOf(
+                navArgument("item") {
+                    type = NavType.StringType
+                }
+            )) { backStackEntry ->
+            backStackEntry.arguments?.getString("item")?.let { json ->
+                val item = Gson().fromJson(json, GridData::class.java)
+                GridDetails(data = item)
             }
         }
 
@@ -85,6 +105,10 @@ fun MainScreen(navController: NavController) {
 
         item {
             MainItem(name = Screens.SampleData.route, navController)
+        }
+
+        item {
+            MainItem(name = Screens.GridData.route, navController = navController)
         }
     }
 }
@@ -114,8 +138,10 @@ fun MainItem(name: String, navController: NavController) {
 
 sealed class Screens(val route: String) {
     object MainScreen : Screens("Main")
-    object SampleData : Screens("SampleData")
+    object SampleData : Screens("SampleListData")
     object SampleDetail : Screens("SampleDetail")
+    object GridData: Screens("GridData")
+    object GridDetail: Screens("GridDetail")
     object Login : Screens("Login")
     object Registration : Screens("Registration")
 }

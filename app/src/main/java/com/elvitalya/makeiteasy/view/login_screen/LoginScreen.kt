@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.elvitalya.makeiteasy.R
+import com.elvitalya.makeiteasy.Screens
 import com.elvitalya.makeiteasy.ui.theme.Purple500
 import com.elvitalya.makeiteasy.ui.theme.Teal200
 import com.elvitalya.makeiteasy.utils.showToast
@@ -138,7 +139,7 @@ fun LoginScreen(navController: NavController) {
                 text = "Create an Account?",
                 modifier = Modifier
                     .clickable {
-                        navController.navigate("register_page")
+                        navController.navigate(Screens.Registration.route)
                     }
                     .fillMaxWidth(),
                 textAlign = TextAlign.Center

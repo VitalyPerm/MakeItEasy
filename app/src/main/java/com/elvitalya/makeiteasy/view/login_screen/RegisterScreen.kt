@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.elvitalya.makeiteasy.R
+import com.elvitalya.makeiteasy.Screens
 import com.elvitalya.makeiteasy.ui.theme.Purple500
 import com.elvitalya.makeiteasy.utils.showToast
 
@@ -210,7 +211,7 @@ fun RegisterScreen(navController: NavController) {
             item {
                 Text(text = "Login instead",
                     modifier = Modifier.clickable {
-                        navController.navigate("login_page")
+                        navController.navigate(Screens.Login.route)
                     })
 
                 Spacer(modifier = Modifier.height(16.dp))

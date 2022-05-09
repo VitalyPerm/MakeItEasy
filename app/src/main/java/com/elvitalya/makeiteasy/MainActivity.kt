@@ -23,6 +23,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.elvitalya.makeiteasy.view.botton_nav.BottomNavigationScreen
 import com.elvitalya.makeiteasy.view.sample_list.SampleList
 import com.elvitalya.makeiteasy.view.grid.GridData
 import com.elvitalya.makeiteasy.view.grid.GridDetails
@@ -93,12 +94,19 @@ fun Navigation() {
         composable(Screens.MainScreen.route, content = {
             MainScreen(navController = navController)
         })
+
+        composable(Screens.BottomNavigation.route, content = {
+            BottomNavigationScreen()
+        })
     }
 }
 
 @Composable
 fun MainScreen(navController: NavController) {
-    LazyColumn(modifier = Modifier.fillMaxSize()) {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
         item {
             MainItem(name = Screens.Login.route, navController)
         }
@@ -109,6 +117,9 @@ fun MainScreen(navController: NavController) {
 
         item {
             MainItem(name = Screens.GridData.route, navController = navController)
+        }
+        item {
+            MainItem(name = Screens.BottomNavigation.route, navController = navController)
         }
     }
 }
@@ -140,8 +151,9 @@ sealed class Screens(val route: String) {
     object MainScreen : Screens("Main")
     object SampleData : Screens("SampleListData")
     object SampleDetail : Screens("SampleDetail")
-    object GridData: Screens("GridData")
-    object GridDetail: Screens("GridDetail")
+    object GridData : Screens("GridData")
+    object GridDetail : Screens("GridDetail")
     object Login : Screens("Login")
     object Registration : Screens("Registration")
+    object BottomNavigation : Screens("BottomNavigation")
 }

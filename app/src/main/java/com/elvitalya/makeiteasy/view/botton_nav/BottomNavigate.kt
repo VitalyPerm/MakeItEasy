@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -18,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -45,6 +46,10 @@ val bottomNavigationItems = listOf(
 @Composable
 fun BottomNavigationScreen() {
     val navController: NavHostController = rememberNavController()
+
+
+    var title by remember { mutableStateOf(BottomNavigate.Home.title) }
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -52,7 +57,7 @@ fun BottomNavigationScreen() {
                 elevation = AppBarDefaults.TopAppBarElevation,
                 title = {
                     Text(
-                        text = "Make it Easy!",
+                        text = title,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .fillMaxWidth()
@@ -61,36 +66,64 @@ fun BottomNavigationScreen() {
             )
         },
         bottomBar = {
-            NavigationExample(navController, bottomNavigationItems)
+            NavigationExample(bottomNavigationItems) { screen ->
+                title = screen
+                when (screen) {
+                    BottomNavigate.Home.title -> preventBackStack(
+                        navController,
+                        BottomNavigate.Home.route
+                    )
+                    BottomNavigate.Favorite.title -> preventBackStack(
+                        navController,
+                        BottomNavigate.Favorite.route
+                    )
+                    BottomNavigate.Search.title -> preventBackStack(
+                        navController,
+                        BottomNavigate.Search.route
+                    )
+                    BottomNavigate.Setting.title -> preventBackStack(
+                        navController,
+                        BottomNavigate.Setting.route
+                    )
+                    BottomNavigate.User.title -> preventBackStack(
+                        navController,
+                        BottomNavigate.User.route
+                    )
+                }
+            }
         }
     ) {
         NavHost(
             navController = navController,
             startDestination = BottomNavigate.Home.route
         ) {
-            composable(BottomNavigate.Home.route) {
-                BottomHome()
-            }
-            composable(BottomNavigate.Favorite.route) {
-                BottomFavorite()
-            }
-            composable(BottomNavigate.Search.route) {
-                BottomSearch()
-            }
-            composable(BottomNavigate.Setting.route) {
-                BottomSetting()
-            }
-            composable(BottomNavigate.User.route) {
-                BottomUser()
-            }
+            composable(BottomNavigate.Home.route) { BottomHome() }
+
+            composable(BottomNavigate.Favorite.route) { BottomFavorite() }
+
+            composable(BottomNavigate.Search.route) { BottomSearch() }
+
+            composable(BottomNavigate.Setting.route) { BottomSetting() }
+
+            composable(BottomNavigate.User.route) { BottomUser() }
+        }
+    }
+}
+
+private fun preventBackStack(navController: NavController, route: String) {
+    if (route == BottomNavigate.Home.route) {
+        navController.popBackStack(BottomNavigate.Home.route, true)
+    } else {
+        navController.navigate(route) {
+            popUpTo(navController.graph.findStartDestination().id)
         }
     }
 }
 
 @Composable
 fun NavigationExample(
-    navController: NavController,
-    bottomNavigationItems: List<BottomNavigate>
+    bottomNavigationItems: List<BottomNavigate>,
+    onClick: (String) -> Unit
 ) {
     BottomNavigation {
         bottomNavigationItems.forEach { screen ->
@@ -99,17 +132,7 @@ fun NavigationExample(
                 label = { Text(text = screen.route) },
                 selected = false,
                 alwaysShowLabel = false,
-                onClick = {
-                    when (screen.route) {
-
-                        BottomNavigate.Home.title -> navController.navigate(BottomNavigate.Home.route)
-                        BottomNavigate.Favorite.title -> navController.navigate(BottomNavigate.Favorite.route)
-                        BottomNavigate.Search.title -> navController.navigate(BottomNavigate.Search.route)
-                        BottomNavigate.Setting.title -> navController.navigate(BottomNavigate.Setting.route)
-                        BottomNavigate.User.title -> navController.navigate(BottomNavigate.User.route)
-
-                    }
-                }
+                onClick = { onClick(screen.route) }
             )
         }
     }

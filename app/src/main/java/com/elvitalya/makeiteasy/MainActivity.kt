@@ -23,6 +23,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.elvitalya.makeiteasy.view.alert_dialog.CallDialog
 import com.elvitalya.makeiteasy.view.botton_nav.BottomNavigationScreen
 import com.elvitalya.makeiteasy.view.sample_list.SampleList
 import com.elvitalya.makeiteasy.view.grid.GridData
@@ -54,6 +55,10 @@ fun Navigation() {
     ) {
         composable(Screens.SampleData.route) {
             SampleList(navController = navController)
+        }
+
+        composable(Screens.Dialog.route) {
+            CallDialog()
         }
 
         composable("${Screens.SampleDetail.route}/{item}",
@@ -121,6 +126,9 @@ fun MainScreen(navController: NavController) {
         item {
             MainItem(name = Screens.BottomNavigation.route, navController = navController)
         }
+        item {
+            MainItem(name = Screens.Dialog.route, navController = navController)
+        }
     }
 }
 
@@ -156,4 +164,5 @@ sealed class Screens(val route: String) {
     object Login : Screens("Login")
     object Registration : Screens("Registration")
     object BottomNavigation : Screens("BottomNavigation")
+    object Dialog : Screens("Dialog")
 }

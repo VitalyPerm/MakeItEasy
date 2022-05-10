@@ -25,16 +25,20 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.elvitalya.makeiteasy.view.alert_dialog.CallDialog
 import com.elvitalya.makeiteasy.view.botton_nav.BottomNavigationScreen
+import com.elvitalya.makeiteasy.view.circular_progress_bar.CircularProgressBarScreen
 import com.elvitalya.makeiteasy.view.sample_list.SampleList
 import com.elvitalya.makeiteasy.view.grid.GridData
 import com.elvitalya.makeiteasy.view.grid.GridDetails
 import com.elvitalya.makeiteasy.view.grid.SampleGrid
 import com.elvitalya.makeiteasy.view.login_screen.LoginScreen
 import com.elvitalya.makeiteasy.view.login_screen.RegisterScreen
+import com.elvitalya.makeiteasy.view.mvvm_api_call_clearn_arch.view.CallApi
 import com.elvitalya.makeiteasy.view.sample_list.SampleData
 import com.elvitalya.makeiteasy.view.sample_list.SampleDataDetails
 import com.google.gson.Gson
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -103,6 +107,14 @@ fun Navigation() {
         composable(Screens.BottomNavigation.route, content = {
             BottomNavigationScreen()
         })
+
+        composable(Screens.CircularProgressBar.route, content = {
+            CircularProgressBarScreen()
+        })
+
+        composable(Screens.MVVMCleanApiCall.route, content = {
+            CallApi()
+        })
     }
 }
 
@@ -128,6 +140,12 @@ fun MainScreen(navController: NavController) {
         }
         item {
             MainItem(name = Screens.Dialog.route, navController = navController)
+        }
+        item {
+            MainItem(name = Screens.CircularProgressBar.route, navController = navController)
+        }
+        item {
+            MainItem(name = Screens.MVVMCleanApiCall.route, navController = navController)
         }
     }
 }
@@ -165,4 +183,6 @@ sealed class Screens(val route: String) {
     object Registration : Screens("Registration")
     object BottomNavigation : Screens("BottomNavigation")
     object Dialog : Screens("Dialog")
+    object CircularProgressBar : Screens("CircularProgressBar")
+    object MVVMCleanApiCall : Screens("MVVMCleanApiCall")
 }

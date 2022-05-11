@@ -39,6 +39,7 @@ import com.elvitalya.makeiteasy.view.grid.GridDetails
 import com.elvitalya.makeiteasy.view.grid.SampleGrid
 import com.elvitalya.makeiteasy.view.login_screen.LoginScreen
 import com.elvitalya.makeiteasy.view.login_screen.RegisterScreen
+import com.elvitalya.makeiteasy.view.material_component.MaterialComponent
 import com.elvitalya.makeiteasy.view.mvvm_api_call_clearn_arch.view.CallApi
 import com.elvitalya.makeiteasy.view.sample_list.SampleData
 import com.elvitalya.makeiteasy.view.sample_list.SampleDataDetails
@@ -121,6 +122,9 @@ fun Navigation() {
         composable(Screens.Shimmer.route, content = {
             ShimmerAnimate()
         })
+        composable(Screens.MaterialComponents.route, content = {
+            MaterialComponent()
+        })
     }
 }
 
@@ -156,6 +160,9 @@ fun MainScreen(navController: NavController) {
         }
         item {
             MainItem(name = Screens.Shimmer.route, navController = navController)
+        }
+        item {
+            MainItem(name = Screens.MaterialComponents.route, navController = navController)
         }
     }
 }
@@ -236,4 +243,5 @@ sealed class Screens(val route: String) {
     object MVVMCleanApiCall : Screens("MVVMCleanApiCall")
     object SplashScreen : Screens("SplashScreen")
     object Shimmer : Screens("Shimmer")
+    object MaterialComponents : Screens("MaterialComponents")
 }

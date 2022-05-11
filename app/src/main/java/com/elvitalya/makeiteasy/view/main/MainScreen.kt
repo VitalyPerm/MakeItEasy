@@ -43,6 +43,7 @@ import com.elvitalya.makeiteasy.view.mvvm_api_call_clearn_arch.view.CallApi
 import com.elvitalya.makeiteasy.view.sample_list.SampleData
 import com.elvitalya.makeiteasy.view.sample_list.SampleDataDetails
 import com.elvitalya.makeiteasy.view.sample_list.SampleList
+import com.elvitalya.makeiteasy.view.shimmer_animation.ShimmerAnimate
 import com.google.gson.Gson
 import kotlinx.coroutines.delay
 
@@ -117,6 +118,9 @@ fun Navigation() {
         composable(Screens.SplashScreen.route, content = {
             SplashScreenAnimate(navController)
         })
+        composable(Screens.Shimmer.route, content = {
+            ShimmerAnimate()
+        })
     }
 }
 
@@ -149,6 +153,9 @@ fun MainScreen(navController: NavController) {
         }
         item {
             MainItem(name = Screens.MVVMCleanApiCall.route, navController = navController)
+        }
+        item {
+            MainItem(name = Screens.Shimmer.route, navController = navController)
         }
     }
 }
@@ -228,4 +235,5 @@ sealed class Screens(val route: String) {
     object CircularProgressBar : Screens("CircularProgressBar")
     object MVVMCleanApiCall : Screens("MVVMCleanApiCall")
     object SplashScreen : Screens("SplashScreen")
+    object Shimmer : Screens("Shimmer")
 }

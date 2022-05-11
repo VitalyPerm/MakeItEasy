@@ -21,9 +21,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.elvitalya.makeiteasy.R
-import com.elvitalya.makeiteasy.Screens
 import com.elvitalya.makeiteasy.ui.theme.Purple500
 import com.elvitalya.makeiteasy.utils.getJsonFromAsset
+import com.elvitalya.makeiteasy.view.main.Screens
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 

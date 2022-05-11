@@ -1,6 +1,5 @@
 package com.elvitalya.makeiteasy.view.grid
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -26,13 +25,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.elvitalya.makeiteasy.R
-import com.elvitalya.makeiteasy.Screens
 import com.elvitalya.makeiteasy.ui.theme.Purple500
 import com.elvitalya.makeiteasy.utils.getJsonFromAsset
+import com.elvitalya.makeiteasy.view.main.Screens
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SampleGrid(navController: NavController) {
     val context = LocalContext.current
@@ -43,7 +41,7 @@ fun SampleGrid(navController: NavController) {
 
     val gridSampleType = object : TypeToken<List<GridData>>() {}.type
 
-    var sampleData: List<GridData> = gson.fromJson(dataFileString, gridSampleType)
+    val sampleData: List<GridData> = gson.fromJson(dataFileString, gridSampleType)
 
     Column(
         modifier = Modifier

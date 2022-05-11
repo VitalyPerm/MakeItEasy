@@ -1,8 +1,10 @@
-package com.elvitalya.makeiteasy
+package com.elvitalya.makeiteasy.view.main
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
+import android.util.Log
+import android.view.animation.OvershootInterpolator
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -10,9 +12,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -23,10 +30,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.elvitalya.makeiteasy.R
 import com.elvitalya.makeiteasy.view.alert_dialog.CallDialog
 import com.elvitalya.makeiteasy.view.botton_nav.BottomNavigationScreen
 import com.elvitalya.makeiteasy.view.circular_progress_bar.CircularProgressBarScreen
-import com.elvitalya.makeiteasy.view.sample_list.SampleList
 import com.elvitalya.makeiteasy.view.grid.GridData
 import com.elvitalya.makeiteasy.view.grid.GridDetails
 import com.elvitalya.makeiteasy.view.grid.SampleGrid
@@ -35,19 +42,11 @@ import com.elvitalya.makeiteasy.view.login_screen.RegisterScreen
 import com.elvitalya.makeiteasy.view.mvvm_api_call_clearn_arch.view.CallApi
 import com.elvitalya.makeiteasy.view.sample_list.SampleData
 import com.elvitalya.makeiteasy.view.sample_list.SampleDataDetails
+import com.elvitalya.makeiteasy.view.sample_list.SampleList
 import com.google.gson.Gson
-import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 
-@AndroidEntryPoint
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            Navigation()
-        }
-    }
-}
-
+private const val TAG = "MAIN"
 
 @Composable
 fun Navigation() {
@@ -55,7 +54,7 @@ fun Navigation() {
 
     NavHost(
         navController = navController,
-        startDestination = Screens.MainScreen.route
+        startDestination = Screens.SplashScreen.route
     ) {
         composable(Screens.SampleData.route) {
             SampleList(navController = navController)
@@ -115,8 +114,12 @@ fun Navigation() {
         composable(Screens.MVVMCleanApiCall.route, content = {
             CallApi()
         })
+        composable(Screens.SplashScreen.route, content = {
+            SplashScreenAnimate(navController)
+        })
     }
 }
+
 
 @Composable
 fun MainScreen(navController: NavController) {
@@ -172,6 +175,45 @@ fun MainItem(name: String, navController: NavController) {
     }
 }
 
+@Composable
+fun SplashScreenAnimate(navController: NavController) {
+
+    val scale = remember { Animatable(0f) }
+
+    LaunchedEffect(key1 = true) {
+        scale.animateTo(
+            targetValue = 0.7f,
+            animationSpec = tween(
+                durationMillis = 1500,
+                easing = {
+                    OvershootInterpolator(3f).getInterpolation(it)
+                }
+            )
+        )
+        delay(1500L)
+        navController.navigate(Screens.MainScreen.route) {
+            popUpTo(Screens.SplashScreen.route) {
+                inclusive = true
+            }
+        }
+    }
+
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.jetpack_compose),
+            contentDescription = null,
+            modifier = Modifier
+                .size(300.dp)
+                .scale(scale.value)
+        )
+    }
+}
+
 
 sealed class Screens(val route: String) {
     object MainScreen : Screens("Main")
@@ -185,4 +227,5 @@ sealed class Screens(val route: String) {
     object Dialog : Screens("Dialog")
     object CircularProgressBar : Screens("CircularProgressBar")
     object MVVMCleanApiCall : Screens("MVVMCleanApiCall")
+    object SplashScreen : Screens("SplashScreen")
 }

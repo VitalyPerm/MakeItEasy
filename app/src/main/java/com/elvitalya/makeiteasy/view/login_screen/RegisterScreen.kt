@@ -29,9 +29,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.elvitalya.makeiteasy.R
-import com.elvitalya.makeiteasy.Screens
 import com.elvitalya.makeiteasy.ui.theme.Purple500
 import com.elvitalya.makeiteasy.utils.showToast
+import com.elvitalya.makeiteasy.view.main.Screens
 
 @Composable
 fun RegisterScreen(navController: NavController) {

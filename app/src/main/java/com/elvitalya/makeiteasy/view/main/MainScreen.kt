@@ -9,6 +9,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -19,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -139,9 +142,11 @@ fun Navigation() {
 
 @Composable
 fun MainScreen(navController: NavController) {
-    LazyColumn(
+
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(3),
         modifier = Modifier
-            .fillMaxSize()
+        .fillMaxSize()
     ) {
         item {
             MainItem(name = Screens.Login.route, navController)
@@ -183,22 +188,24 @@ fun MainScreen(navController: NavController) {
 
 @Composable
 fun MainItem(name: String, navController: NavController) {
+    val width = LocalConfiguration.current.screenWidthDp.dp
     Box(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-            .clip(RoundedCornerShape(16.dp))
+            .size(width / 3)
+            .padding(8.dp)
+            .clip(RoundedCornerShape(8.dp))
             .background(Color.Cyan.copy(alpha = 0.5f))
-            .clickable { navController.navigate(name) }
+            .clickable { navController.navigate(name) },
+        contentAlignment = Alignment.Center
     ) {
         Text(
             text = name,
             fontWeight = FontWeight.Bold,
-            fontSize = 24.sp,
+            fontSize = 18.sp,
             modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            textAlign = TextAlign.Center
+                .padding(8.dp),
+            textAlign = TextAlign.Center,
+
         )
     }
 }
@@ -245,19 +252,19 @@ fun SplashScreenAnimate(navController: NavController) {
 
 sealed class Screens(val route: String) {
     object MainScreen : Screens("Main")
-    object SampleData : Screens("SampleListData")
-    object SampleDetail : Screens("SampleDetail")
-    object GridData : Screens("GridData")
-    object GridDetail : Screens("GridDetail")
+    object SampleData : Screens("Sample List Data")
+    object SampleDetail : Screens("Sample Detail")
+    object GridData : Screens("Grid Data")
+    object GridDetail : Screens("Grid Detail")
     object Login : Screens("Login")
     object Registration : Screens("Registration")
-    object BottomNavigation : Screens("BottomNavigation")
+    object BottomNavigation : Screens("Bottom Navigation")
     object Dialog : Screens("Dialog")
-    object CircularProgressBar : Screens("CircularProgressBar")
-    object MVVMCleanApiCall : Screens("MVVMCleanApiCall")
+    object CircularProgressBar : Screens("Circular Progress Bar")
+    object MVVMCleanApiCall : Screens("MVVM Clean Api Call")
     object SplashScreen : Screens("SplashScreen")
     object Shimmer : Screens("Shimmer")
-    object MaterialComponents : Screens("MaterialComponents")
+    object MaterialComponents : Screens("Material Components")
     object ExoPlayer : Screens("ExoPlayer")
-    object GridShimmer : Screens("GridShimmer")
+    object GridShimmer : Screens("Grid Shimmer")
 }

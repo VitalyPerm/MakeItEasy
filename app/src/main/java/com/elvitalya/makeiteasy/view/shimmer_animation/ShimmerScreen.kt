@@ -85,49 +85,44 @@ fun ShimmerAnimateItem() {
 
 @Composable
 fun ShimmerItem(brush: Brush) {
-    Column(
-        modifier = Modifier
-            .padding(5.dp)
+
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .padding(vertical = 6.dp, horizontal = 10.dp)
     ) {
-        Row(
+        Spacer(
             modifier = Modifier
-                .fillMaxSize()
+                .size(70.dp)
+                .background(brush)
+        )
+
+        Spacer(modifier = Modifier.width(10.dp))
+
+        Column(
+            Modifier.fillMaxWidth()
         ) {
-            Spacer(
+            Text(
+                text = "",
                 modifier = Modifier
-                    .size(70.dp)
+                    .height(20.dp)
+                    .fillMaxWidth()
+                    .background(brush)
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            Divider()
+            Spacer(modifier = Modifier.height(10.dp))
+            Text(
+                text = "",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(20.dp)
                     .background(brush)
             )
 
-            Column {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                ) {
-                    Text(
-                        text = "",
-                        modifier = Modifier
-                            .height(20.dp)
-                            .weight(1f)
-                            .background(brush)
-                    )
-                    Divider(
-                        modifier = Modifier
-                            .weight(0.1f)
-                    )
-
-                }
-                Spacer(modifier = Modifier.padding(5.dp))
-
-                Text(
-                    text = "",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(20.dp)
-                        .background(brush)
-                )
-            }
         }
+
+
     }
 }
 

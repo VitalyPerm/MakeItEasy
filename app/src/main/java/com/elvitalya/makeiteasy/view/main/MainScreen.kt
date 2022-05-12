@@ -38,6 +38,7 @@ import com.elvitalya.makeiteasy.view.exoplayer.ExoPlayer
 import com.elvitalya.makeiteasy.view.grid.GridData
 import com.elvitalya.makeiteasy.view.grid.GridDetails
 import com.elvitalya.makeiteasy.view.grid.SampleGrid
+import com.elvitalya.makeiteasy.view.grid_shimmer.ShimmerGridAnimate
 import com.elvitalya.makeiteasy.view.login_screen.LoginScreen
 import com.elvitalya.makeiteasy.view.login_screen.RegisterScreen
 import com.elvitalya.makeiteasy.view.material_component.MaterialComponent
@@ -129,6 +130,9 @@ fun Navigation() {
         composable(Screens.ExoPlayer.route, content = {
             ExoPlayer()
         })
+        composable(Screens.GridShimmer.route, content = {
+            ShimmerGridAnimate()
+        })
     }
 }
 
@@ -171,6 +175,9 @@ fun MainScreen(navController: NavController) {
         item {
             MainItem(name = Screens.ExoPlayer.route, navController = navController)
         }
+        item {
+            MainItem(name = Screens.GridShimmer.route, navController = navController)
+        }
     }
 }
 
@@ -205,7 +212,7 @@ fun SplashScreenAnimate(navController: NavController) {
         scale.animateTo(
             targetValue = 0.7f,
             animationSpec = tween(
-                durationMillis = 1500,
+                durationMillis = 700,
                 easing = {
                     OvershootInterpolator(3f).getInterpolation(it)
                 }
@@ -252,4 +259,5 @@ sealed class Screens(val route: String) {
     object Shimmer : Screens("Shimmer")
     object MaterialComponents : Screens("MaterialComponents")
     object ExoPlayer : Screens("ExoPlayer")
+    object GridShimmer : Screens("GridShimmer")
 }

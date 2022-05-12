@@ -34,6 +34,7 @@ import com.elvitalya.makeiteasy.R
 import com.elvitalya.makeiteasy.view.alert_dialog.CallDialog
 import com.elvitalya.makeiteasy.view.botton_nav.BottomNavigationScreen
 import com.elvitalya.makeiteasy.view.circular_progress_bar.CircularProgressBarScreen
+import com.elvitalya.makeiteasy.view.exoplayer.ExoPlayer
 import com.elvitalya.makeiteasy.view.grid.GridData
 import com.elvitalya.makeiteasy.view.grid.GridDetails
 import com.elvitalya.makeiteasy.view.grid.SampleGrid
@@ -125,6 +126,9 @@ fun Navigation() {
         composable(Screens.MaterialComponents.route, content = {
             MaterialComponent()
         })
+        composable(Screens.ExoPlayer.route, content = {
+            ExoPlayer()
+        })
     }
 }
 
@@ -163,6 +167,9 @@ fun MainScreen(navController: NavController) {
         }
         item {
             MainItem(name = Screens.MaterialComponents.route, navController = navController)
+        }
+        item {
+            MainItem(name = Screens.ExoPlayer.route, navController = navController)
         }
     }
 }
@@ -244,4 +251,5 @@ sealed class Screens(val route: String) {
     object SplashScreen : Screens("SplashScreen")
     object Shimmer : Screens("Shimmer")
     object MaterialComponents : Screens("MaterialComponents")
+    object ExoPlayer : Screens("ExoPlayer")
 }

@@ -65,6 +65,9 @@ dependencies {
     implementation("androidx.paging:paging-compose:1.0.0-alpha14")
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
 
+    //exoplayer
+    implementation 'com.google.android.exoplayer:exoplayer:2.17.1'
+
     // Room
     implementation "androidx.room:room-runtime:2.4.2"
     kapt "androidx.room:room-compiler:2.4.2"

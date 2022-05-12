@@ -1,6 +1,5 @@
 package com.elvitalya.makeiteasy.view.main
 
-import android.util.Log
 import android.view.animation.OvershootInterpolator
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
@@ -8,7 +7,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -46,6 +44,7 @@ import com.elvitalya.makeiteasy.view.login_screen.LoginScreen
 import com.elvitalya.makeiteasy.view.login_screen.RegisterScreen
 import com.elvitalya.makeiteasy.view.material_component.MaterialComponent
 import com.elvitalya.makeiteasy.view.mvvm_api_call_clearn_arch.view.CallApi
+import com.elvitalya.makeiteasy.view.pick_image.ImagePicker
 import com.elvitalya.makeiteasy.view.sample_list.SampleData
 import com.elvitalya.makeiteasy.view.sample_list.SampleDataDetails
 import com.elvitalya.makeiteasy.view.sample_list.SampleList
@@ -136,6 +135,9 @@ fun Navigation() {
         composable(Screens.GridShimmer.route, content = {
             ShimmerGridAnimate()
         })
+        composable(Screens.ImagePicker.route, content = {
+            ImagePicker()
+        })
     }
 }
 
@@ -183,6 +185,9 @@ fun MainScreen(navController: NavController) {
         item {
             MainItem(name = Screens.GridShimmer.route, navController = navController)
         }
+        item {
+            MainItem(name = Screens.ImagePicker.route, navController = navController)
+        }
     }
 }
 
@@ -225,7 +230,7 @@ fun SplashScreenAnimate(navController: NavController) {
                 }
             )
         )
-        delay(1500L)
+        delay(700L)
         navController.navigate(Screens.MainScreen.route) {
             popUpTo(Screens.SplashScreen.route) {
                 inclusive = true
@@ -267,4 +272,5 @@ sealed class Screens(val route: String) {
     object MaterialComponents : Screens("Material Components")
     object ExoPlayer : Screens("ExoPlayer")
     object GridShimmer : Screens("Grid Shimmer")
+    object ImagePicker : Screens("Image Picker")
 }

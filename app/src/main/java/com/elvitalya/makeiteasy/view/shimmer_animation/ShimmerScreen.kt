@@ -121,8 +121,6 @@ fun ShimmerItem(brush: Brush) {
             )
 
         }
-
-
     }
 }
 

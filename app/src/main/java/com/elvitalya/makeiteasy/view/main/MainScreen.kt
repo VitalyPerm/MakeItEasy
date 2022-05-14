@@ -50,6 +50,7 @@ import com.elvitalya.makeiteasy.view.sample_list.SampleData
 import com.elvitalya.makeiteasy.view.sample_list.SampleDataDetails
 import com.elvitalya.makeiteasy.view.sample_list.SampleList
 import com.elvitalya.makeiteasy.view.shimmer_animation.ShimmerAnimate
+import com.elvitalya.makeiteasy.view.spinner_date_time_picker.SpinnerScreen
 import com.google.gson.Gson
 import kotlinx.coroutines.delay
 
@@ -142,6 +143,9 @@ fun Navigation() {
         composable(Screens.ExpandableList.route, content = {
             ExpandableListScreen()
         })
+        composable(Screens.SpinnerDateTimePicker.route, content = {
+            SpinnerScreen()
+        })
     }
 }
 
@@ -194,6 +198,9 @@ fun MainScreen(navController: NavController) {
         }
         item {
             MainItem(name = Screens.ExpandableList.route, navController = navController)
+        }
+        item {
+            MainItem(name = Screens.SpinnerDateTimePicker.route, navController = navController)
         }
     }
 }
@@ -281,4 +288,5 @@ sealed class Screens(val route: String) {
     object GridShimmer : Screens("Grid Shimmer")
     object ImagePicker : Screens("Image Picker")
     object ExpandableList : Screens("Expandable List")
+    object SpinnerDateTimePicker : Screens("Spinner Date Time Picker")
 }

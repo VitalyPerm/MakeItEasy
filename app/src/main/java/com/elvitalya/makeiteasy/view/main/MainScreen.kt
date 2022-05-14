@@ -36,6 +36,7 @@ import com.elvitalya.makeiteasy.view.alert_dialog.CallDialog
 import com.elvitalya.makeiteasy.view.botton_nav.BottomNavigationScreen
 import com.elvitalya.makeiteasy.view.circular_progress_bar.CircularProgressBarScreen
 import com.elvitalya.makeiteasy.view.exoplayer.ExoPlayer
+import com.elvitalya.makeiteasy.view.expandable_list.ExpandableListScreen
 import com.elvitalya.makeiteasy.view.grid.GridData
 import com.elvitalya.makeiteasy.view.grid.GridDetails
 import com.elvitalya.makeiteasy.view.grid.SampleGrid
@@ -138,6 +139,9 @@ fun Navigation() {
         composable(Screens.ImagePicker.route, content = {
             ImagePicker()
         })
+        composable(Screens.ExpandableList.route, content = {
+            ExpandableListScreen()
+        })
     }
 }
 
@@ -188,6 +192,9 @@ fun MainScreen(navController: NavController) {
         item {
             MainItem(name = Screens.ImagePicker.route, navController = navController)
         }
+        item {
+            MainItem(name = Screens.ExpandableList.route, navController = navController)
+        }
     }
 }
 
@@ -230,7 +237,7 @@ fun SplashScreenAnimate(navController: NavController) {
                 }
             )
         )
-        delay(700L)
+        delay(100L)
         navController.navigate(Screens.MainScreen.route) {
             popUpTo(Screens.SplashScreen.route) {
                 inclusive = true
@@ -273,4 +280,5 @@ sealed class Screens(val route: String) {
     object ExoPlayer : Screens("ExoPlayer")
     object GridShimmer : Screens("Grid Shimmer")
     object ImagePicker : Screens("Image Picker")
+    object ExpandableList : Screens("Expandable List")
 }

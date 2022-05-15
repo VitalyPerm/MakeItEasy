@@ -25,20 +25,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import kotlinx.coroutines.delay
 
 @Composable
-fun ImagePicker(
-    viewModel: ImagePickerViewModel = hiltViewModel()
-) {
-    val imageUri = viewModel.picUri.collectAsState(initial = null)
+fun ImagePicker() {
+    var uri by remember { mutableStateOf<Uri?>(null)}
     val context = LocalContext.current
     var bitmap by remember { mutableStateOf<Bitmap?>(null) }
 
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
-    ) { uri: Uri? ->
-        viewModel.savePic(uri)
-    }
+    ) { uri = it }
 
     Scaffold(
         modifier = Modifier
@@ -90,7 +87,7 @@ fun ImagePicker(
                 .background(Color.LightGray),
             contentAlignment = Alignment.Center
         ) {
-            imageUri.value?.let  {
+            uri?.let  {
                 bitmap = if (Build.VERSION.SDK_INT < 28) {
                     MediaStore.Images.Media.getBitmap(context.contentResolver, it)
                 } else {

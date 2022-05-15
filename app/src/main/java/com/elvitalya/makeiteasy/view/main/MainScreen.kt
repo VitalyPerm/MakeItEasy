@@ -41,6 +41,7 @@ import com.elvitalya.makeiteasy.view.grid.GridData
 import com.elvitalya.makeiteasy.view.grid.GridDetails
 import com.elvitalya.makeiteasy.view.grid.SampleGrid
 import com.elvitalya.makeiteasy.view.grid_shimmer.ShimmerGridAnimate
+import com.elvitalya.makeiteasy.view.list_with_search.ListWithSearch
 import com.elvitalya.makeiteasy.view.login_screen.LoginScreen
 import com.elvitalya.makeiteasy.view.login_screen.RegisterScreen
 import com.elvitalya.makeiteasy.view.material_component.MaterialComponent
@@ -146,6 +147,9 @@ fun Navigation() {
         composable(Screens.SpinnerDateTimePicker.route, content = {
             SpinnerScreen()
         })
+        composable(Screens.ListWithSearch.route, content = {
+            ListWithSearch()
+        })
     }
 }
 
@@ -201,6 +205,9 @@ fun MainScreen(navController: NavController) {
         }
         item {
             MainItem(name = Screens.SpinnerDateTimePicker.route, navController = navController)
+        }
+        item {
+            MainItem(name = Screens.ListWithSearch.route, navController = navController)
         }
     }
 }
@@ -289,4 +296,5 @@ sealed class Screens(val route: String) {
     object ImagePicker : Screens("Image Picker")
     object ExpandableList : Screens("Expandable List")
     object SpinnerDateTimePicker : Screens("Spinner Date Time Picker")
+    object ListWithSearch : Screens("List with search")
 }

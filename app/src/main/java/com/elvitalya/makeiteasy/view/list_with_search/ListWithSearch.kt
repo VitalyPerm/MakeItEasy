@@ -34,7 +34,6 @@ fun ListWithSearch() {
 
 @Composable
 fun CountryListScreen() {
-
     val textVal = remember { mutableStateOf(TextFieldValue("")) }
 
     Column {
@@ -47,25 +46,20 @@ fun CountryListScreen() {
 fun CountryList(textVal: MutableState<TextFieldValue>) {
     val context = LocalContext.current
     val countries = getListOfCountries()
-    var filteredCountries: ArrayList<String>
+    var filteredCountries: List<String>
     LazyColumn(
         modifier = Modifier
             .fillMaxWidth()
     ) {
         val searchText = textVal.value.text
-        filteredCountries = if (searchText.isEmpty()) {
-            countries
-        } else {
-            val resultList = ArrayList<String>()
-            for (country in countries) {
-                if (country.lowercase(Locale.getDefault())
-                        .contains(searchText.lowercase(Locale.getDefault()))
-                ) {
-                    resultList.add(country)
-                }
+        filteredCountries = if (searchText.isEmpty()) countries
+         else {
+            countries.filter {
+                it.lowercase(Locale.getDefault())
+                    .contains(searchText.lowercase(Locale.getDefault()))
             }
-            resultList
         }
+
         items(filteredCountries) { filteredCountry ->
             CountryListItem(
                 countryText = filteredCountry,
@@ -74,7 +68,6 @@ fun CountryList(textVal: MutableState<TextFieldValue>) {
                 }
             )
         }
-
     }
 }
 

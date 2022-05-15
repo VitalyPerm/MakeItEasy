@@ -1,5 +1,6 @@
 package com.elvitalya.makeiteasy.view.main
 
+import android.os.Build
 import android.view.animation.OvershootInterpolator
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
@@ -61,9 +62,12 @@ private const val TAG = "MAIN"
 fun Navigation() {
     val navController = rememberNavController()
 
+    val startDestination = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
+        Screens.MainScreen.route else Screens.SplashScreen.route
+
     NavHost(
         navController = navController,
-        startDestination = Screens.SplashScreen.route
+        startDestination = startDestination
     ) {
         composable(Screens.SampleData.route) {
             SampleList(navController = navController)
@@ -160,7 +164,7 @@ fun MainScreen(navController: NavController) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
         modifier = Modifier
-        .fillMaxSize()
+            .fillMaxSize()
     ) {
         item {
             MainItem(name = Screens.Login.route, navController)
@@ -232,7 +236,7 @@ fun MainItem(name: String, navController: NavController) {
                 .padding(8.dp),
             textAlign = TextAlign.Center,
 
-        )
+            )
     }
 }
 

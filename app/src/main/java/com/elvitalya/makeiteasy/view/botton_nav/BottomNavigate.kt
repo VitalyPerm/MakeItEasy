@@ -1,36 +1,31 @@
 package com.elvitalya.makeiteasy.view.botton_nav
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.elvitalya.makeiteasy.ui.theme.Purple500
 
-sealed class BottomNavigate(val route: String, val title: String, val icon: ImageVector) {
-    object Home : BottomNavigate("Home", "Home", Icons.Filled.Home)
-    object Favorite : BottomNavigate("Favorite", "Favorite", Icons.Filled.Favorite)
-    object Search : BottomNavigate("Search", "Search", Icons.Filled.Search)
-    object Setting : BottomNavigate("Setting", "Setting", Icons.Filled.Settings)
-    object User : BottomNavigate("User", "User", Icons.Filled.Person)
+enum class BottomNavigate(
+    val route: String,
+    val title: String,
+    val icon: ImageVector
+) {
+    Home("Home", "Home", Icons.Filled.Home),
+    Favorite("Favorite", "Favorite", Icons.Filled.Favorite),
+    Search("Search", "Search", Icons.Filled.Search),
+    Setting("Setting", "Setting", Icons.Filled.Settings),
+    User("User", "User", Icons.Filled.Person)
 }
 
 
@@ -46,9 +41,7 @@ val bottomNavigationItems = listOf(
 @Composable
 fun BottomNavigationScreen() {
     val navController: NavHostController = rememberNavController()
-
-
-    var title by remember { mutableStateOf(BottomNavigate.Home.title) }
+    val title = remember { mutableStateOf(BottomNavigate.Home.title) }
 
     Scaffold(
         topBar = {
@@ -57,7 +50,7 @@ fun BottomNavigationScreen() {
                 elevation = AppBarDefaults.TopAppBarElevation,
                 title = {
                     Text(
-                        text = title,
+                        text = title.value,
                         textAlign = TextAlign.Center,
                         modifier = Modifier
                             .fillMaxWidth()
@@ -66,174 +59,58 @@ fun BottomNavigationScreen() {
             )
         },
         bottomBar = {
-            NavigationExample(bottomNavigationItems) { screen ->
-                title = screen
-                when (screen) {
-                    BottomNavigate.Home.title -> preventBackStack(
-                        navController,
-                        BottomNavigate.Home.route
-                    )
-                    BottomNavigate.Favorite.title -> preventBackStack(
-                        navController,
-                        BottomNavigate.Favorite.route
-                    )
-                    BottomNavigate.Search.title -> preventBackStack(
-                        navController,
-                        BottomNavigate.Search.route
-                    )
-                    BottomNavigate.Setting.title -> preventBackStack(
-                        navController,
-                        BottomNavigate.Setting.route
-                    )
-                    BottomNavigate.User.title -> preventBackStack(
-                        navController,
-                        BottomNavigate.User.route
-                    )
-                }
-            }
+            BottomNavigationBar(navController, bottomNavigationItems, title)
         }
     ) {
         NavHost(
             navController = navController,
             startDestination = BottomNavigate.Home.route
         ) {
-            composable(BottomNavigate.Home.route) { BottomHome() }
+            composable(BottomNavigate.Home.route) { HomeNavHost() }
 
-            composable(BottomNavigate.Favorite.route) { BottomFavorite() }
+            composable(BottomNavigate.Favorite.route) { FavoriteNavHost() }
 
-            composable(BottomNavigate.Search.route) { BottomSearch() }
+            composable(BottomNavigate.Search.route) { SearchNavHost() }
 
-            composable(BottomNavigate.Setting.route) { BottomSetting() }
+            composable(BottomNavigate.Setting.route) { SettingNavHost() }
 
-            composable(BottomNavigate.User.route) { BottomUser() }
-        }
-    }
-}
-
-private fun preventBackStack(navController: NavController, route: String) {
-    if (route == BottomNavigate.Home.route) {
-        navController.popBackStack(BottomNavigate.Home.route, true)
-    } else {
-        navController.navigate(route) {
-            popUpTo(navController.graph.findStartDestination().id)
+            composable(BottomNavigate.User.route) { UserNavHost() }
         }
     }
 }
 
 @Composable
-fun NavigationExample(
+fun BottomNavigationBar(
+    navController: NavController,
     bottomNavigationItems: List<BottomNavigate>,
-    onClick: (String) -> Unit
+    title: MutableState<String>
 ) {
-    BottomNavigation {
-        bottomNavigationItems.forEach { screen ->
-            BottomNavigationItem(
-                icon = { Icon(screen.icon, contentDescription = null) },
-                label = { Text(text = screen.route) },
-                selected = false,
-                alwaysShowLabel = false,
-                onClick = { onClick(screen.route) }
-            )
+
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route ?: BottomNavigate.Home.route
+    val routes = remember { BottomNavigate.values().map { it.route } }
+
+    if (currentRoute in routes) {
+        BottomNavigation {
+            bottomNavigationItems.forEach { screen ->
+                BottomNavigationItem(
+                    icon = { Icon(screen.icon, contentDescription = null) },
+                    label = { Text(text = screen.route) },
+                    selected = currentRoute == screen.route,
+                    onClick = {
+                        if (screen.route != currentRoute) {
+                            navController.navigate(screen.route) {
+                                popUpTo(navController.graph.startDestinationId) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                            title.value = screen.title
+                        }
+                    }
+                )
+            }
         }
-    }
-}
-
-@Composable
-fun BottomHome() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(
-            text = BottomNavigate.Home.title,
-            style = MaterialTheme.typography.h5,
-            color = Color.Green,
-            fontFamily = FontFamily.Monospace,
-            fontStyle = FontStyle.Italic,
-            fontWeight = FontWeight.Bold,
-            fontSize = 30.sp
-        )
-    }
-}
-
-@Composable
-fun BottomFavorite() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(
-            text = BottomNavigate.Favorite.title,
-            style = MaterialTheme.typography.h5,
-            color = Color.Green,
-            fontFamily = FontFamily.Monospace,
-            fontStyle = FontStyle.Italic,
-            fontWeight = FontWeight.Bold,
-            fontSize = 30.sp
-        )
-    }
-}
-
-@Composable
-fun BottomSearch() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(
-            text = BottomNavigate.Search.title,
-            style = MaterialTheme.typography.h5,
-            color = Color.Green,
-            fontFamily = FontFamily.Monospace,
-            fontStyle = FontStyle.Italic,
-            fontWeight = FontWeight.Bold,
-            fontSize = 30.sp
-        )
-    }
-}
-
-@Composable
-fun BottomSetting() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(
-            text = BottomNavigate.Setting.title,
-            style = MaterialTheme.typography.h5,
-            color = Color.Green,
-            fontFamily = FontFamily.Monospace,
-            fontStyle = FontStyle.Italic,
-            fontWeight = FontWeight.Bold,
-            fontSize = 30.sp
-        )
-    }
-}
-
-@Composable
-fun BottomUser() {
-    Column(
-        modifier = Modifier
-            .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(
-            text = BottomNavigate.User.title,
-            style = MaterialTheme.typography.h5,
-            color = Color.Green,
-            fontFamily = FontFamily.Monospace,
-            fontStyle = FontStyle.Italic,
-            fontWeight = FontWeight.Bold,
-            fontSize = 30.sp
-        )
     }
 }

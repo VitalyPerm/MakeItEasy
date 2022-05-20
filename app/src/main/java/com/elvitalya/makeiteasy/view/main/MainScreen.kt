@@ -34,6 +34,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.elvitalya.makeiteasy.R
 import com.elvitalya.makeiteasy.view.alert_dialog.CallDialog
+import com.elvitalya.makeiteasy.view.bottom_app_bar_with_fab.BottomAppBarWithFab
 import com.elvitalya.makeiteasy.view.bottom_sheet.BottomSheet
 import com.elvitalya.makeiteasy.view.botton_nav.BottomNavigationScreen
 import com.elvitalya.makeiteasy.view.circular_progress_bar.CircularProgressBarScreen
@@ -108,64 +109,67 @@ fun Navigation() {
             }
         }
 
-        composable(Screens.Login.route, content = {
+        composable(Screens.Login.route) {
             LoginScreen(navController = navController)
-        })
-        composable(Screens.Registration.route, content = {
+        }
+        composable(Screens.Registration.route) {
             RegisterScreen(navController = navController)
-        })
+        }
 
-        composable(Screens.MainScreen.route, content = {
+        composable(Screens.MainScreen.route) {
             MainScreen(navController = navController)
-        })
+        }
 
-        composable(Screens.BottomNavigation.route, content = {
+        composable(Screens.BottomNavigation.route) {
             BottomNavigationScreen()
-        })
+        }
 
-        composable(Screens.CircularProgressBar.route, content = {
+        composable(Screens.CircularProgressBar.route) {
             CircularProgressBarScreen()
-        })
+        }
 
-        composable(Screens.MVVMCleanApiCall.route, content = {
+        composable(Screens.MVVMCleanApiCall.route) {
             CallApi()
-        })
-        composable(Screens.SplashScreen.route, content = {
+        }
+        composable(Screens.SplashScreen.route) {
             SplashScreenAnimate(navController)
-        })
-        composable(Screens.Shimmer.route, content = {
+        }
+        composable(Screens.Shimmer.route) {
             ShimmerAnimate()
-        })
-        composable(Screens.MaterialComponents.route, content = {
+        }
+        composable(Screens.MaterialComponents.route) {
             MaterialComponent()
-        })
-        composable(Screens.ExoPlayer.route, content = {
+        }
+        composable(Screens.ExoPlayer.route) {
             ExoPlayer()
-        })
-        composable(Screens.GridShimmer.route, content = {
+        }
+        composable(Screens.GridShimmer.route) {
             ShimmerGridAnimate()
-        })
-        composable(Screens.ImagePicker.route, content = {
+        }
+        composable(Screens.ImagePicker.route) {
             ImagePicker()
-        })
-        composable(Screens.ExpandableList.route, content = {
+        }
+        composable(Screens.ExpandableList.route) {
             ExpandableListScreen()
-        })
-        composable(Screens.SpinnerDateTimePicker.route, content = {
+        }
+        composable(Screens.SpinnerDateTimePicker.route) {
             SpinnerScreen()
-        })
-        composable(Screens.ListWithSearch.route, content = {
+        }
+        composable(Screens.ListWithSearch.route) {
             ListWithSearch()
-        })
-        composable(Screens.BottomSheet.route, content = {
+        }
+        composable(Screens.BottomSheet.route) {
             BottomSheet()
-        })
-        composable(Screens.Test.route, content = {
+        }
+        composable(Screens.Test.route) {
             Test()
-        })
-        composable(Screens.NestedLazyList.route, content = {
+        }
+        composable(Screens.NestedLazyList.route) {
             NestedLazyList()
-        })
+        }
+        composable(Screens.BottomAppBarWithFab.route) {
+            BottomAppBarWithFab()
+        }
     }
 }
 
@@ -233,6 +237,9 @@ fun MainScreen(navController: NavController) {
         }
         item {
             MainItem(name = Screens.NestedLazyList.route, navController = navController)
+        }
+        item {
+            MainItem(name = Screens.BottomAppBarWithFab.route, navController = navController)
         }
     }
 }
@@ -325,4 +332,5 @@ sealed class Screens(val route: String) {
     object BottomSheet : Screens("Bottom Sheet")
     object Test : Screens("Test")
     object NestedLazyList : Screens("Nested Lazy List")
+    object BottomAppBarWithFab : Screens("Bottom AppBar With Fab")
 }

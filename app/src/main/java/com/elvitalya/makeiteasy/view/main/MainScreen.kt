@@ -34,6 +34,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.elvitalya.makeiteasy.R
 import com.elvitalya.makeiteasy.view.alert_dialog.CallDialog
+import com.elvitalya.makeiteasy.view.bottom_sheet.BottomSheet
 import com.elvitalya.makeiteasy.view.botton_nav.BottomNavigationScreen
 import com.elvitalya.makeiteasy.view.circular_progress_bar.CircularProgressBarScreen
 import com.elvitalya.makeiteasy.view.exoplayer.ExoPlayer
@@ -47,12 +48,14 @@ import com.elvitalya.makeiteasy.view.login_screen.LoginScreen
 import com.elvitalya.makeiteasy.view.login_screen.RegisterScreen
 import com.elvitalya.makeiteasy.view.material_component.MaterialComponent
 import com.elvitalya.makeiteasy.view.mvvm_api_call_clearn_arch.view.CallApi
+import com.elvitalya.makeiteasy.view.nested_lazy_list.NestedLazyList
 import com.elvitalya.makeiteasy.view.pick_image.ImagePicker
 import com.elvitalya.makeiteasy.view.sample_list.SampleData
 import com.elvitalya.makeiteasy.view.sample_list.SampleDataDetails
 import com.elvitalya.makeiteasy.view.sample_list.SampleList
 import com.elvitalya.makeiteasy.view.shimmer_animation.ShimmerAnimate
 import com.elvitalya.makeiteasy.view.spinner_date_time_picker.SpinnerScreen
+import com.elvitalya.makeiteasy.view.test.Test
 import com.google.gson.Gson
 import kotlinx.coroutines.delay
 
@@ -154,6 +157,15 @@ fun Navigation() {
         composable(Screens.ListWithSearch.route, content = {
             ListWithSearch()
         })
+        composable(Screens.BottomSheet.route, content = {
+            BottomSheet()
+        })
+        composable(Screens.Test.route, content = {
+            Test()
+        })
+        composable(Screens.NestedLazyList.route, content = {
+            NestedLazyList()
+        })
     }
 }
 
@@ -212,6 +224,15 @@ fun MainScreen(navController: NavController) {
         }
         item {
             MainItem(name = Screens.ListWithSearch.route, navController = navController)
+        }
+        item {
+            MainItem(name = Screens.BottomSheet.route, navController = navController)
+        }
+        item {
+            MainItem(name = Screens.Test.route, navController = navController)
+        }
+        item {
+            MainItem(name = Screens.NestedLazyList.route, navController = navController)
         }
     }
 }
@@ -301,4 +322,7 @@ sealed class Screens(val route: String) {
     object ExpandableList : Screens("Expandable List")
     object SpinnerDateTimePicker : Screens("Spinner Date Time Picker")
     object ListWithSearch : Screens("List with search")
+    object BottomSheet : Screens("Bottom Sheet")
+    object Test : Screens("Test")
+    object NestedLazyList : Screens("Nested Lazy List")
 }

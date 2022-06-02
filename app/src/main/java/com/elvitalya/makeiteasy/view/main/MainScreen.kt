@@ -59,6 +59,7 @@ import com.elvitalya.makeiteasy.view.shimmer_animation.ShimmerAnimate
 import com.elvitalya.makeiteasy.view.spinner_date_time_picker.SpinnerScreen
 import com.elvitalya.makeiteasy.view.customPb.CustomPbScreen
 import com.elvitalya.makeiteasy.view.nav_drawer.NavDrawerScreen
+import com.elvitalya.makeiteasy.view.swipe_to_reveal.SwipeToRevealScreen
 import com.elvitalya.makeiteasy.view.test.Test
 import com.google.gson.Gson
 import kotlinx.coroutines.delay
@@ -182,6 +183,9 @@ fun Navigation() {
         composable(Screens.NavDrawer.route) {
             NavDrawerScreen()
         }
+        composable(Screens.SwipeToReveal.route) {
+            SwipeToRevealScreen()
+        }
     }
 }
 
@@ -262,6 +266,9 @@ fun MainScreen(navController: NavController) {
         }
         item {
             MainItem(name = Screens.NavDrawer.route, navController = navController)
+        }
+        item {
+            MainItem(name = Screens.SwipeToReveal.route, navController = navController)
         }
     }
 }
@@ -358,4 +365,5 @@ sealed class Screens(val route: String) {
     object BottomAppBarWithFab : Screens("Bottom AppBar With Fab")
     object CameraX : Screens("CameraX")
     object NavDrawer : Screens("NavDrawer")
+    object SwipeToReveal : Screens("Swipe To Reveal")
 }

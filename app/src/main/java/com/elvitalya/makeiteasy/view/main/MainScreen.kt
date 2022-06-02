@@ -37,6 +37,7 @@ import com.elvitalya.makeiteasy.view.alert_dialog.CallDialog
 import com.elvitalya.makeiteasy.view.bottom_app_bar_with_fab.BottomAppBarWithFab
 import com.elvitalya.makeiteasy.view.bottom_sheet.BottomSheet
 import com.elvitalya.makeiteasy.view.botton_nav.BottomNavigationScreen
+import com.elvitalya.makeiteasy.view.camera_capture.CameraScreen
 import com.elvitalya.makeiteasy.view.circular_progress_bar.CircularProgressBarScreen
 import com.elvitalya.makeiteasy.view.exoplayer.ExoPlayer
 import com.elvitalya.makeiteasy.view.expandable_list.ExpandableListScreen
@@ -56,6 +57,8 @@ import com.elvitalya.makeiteasy.view.sample_list.SampleDataDetails
 import com.elvitalya.makeiteasy.view.sample_list.SampleList
 import com.elvitalya.makeiteasy.view.shimmer_animation.ShimmerAnimate
 import com.elvitalya.makeiteasy.view.spinner_date_time_picker.SpinnerScreen
+import com.elvitalya.makeiteasy.view.customPb.CustomPbScreen
+import com.elvitalya.makeiteasy.view.nav_drawer.NavDrawerScreen
 import com.elvitalya.makeiteasy.view.test.Test
 import com.google.gson.Gson
 import kotlinx.coroutines.delay
@@ -161,14 +164,23 @@ fun Navigation() {
         composable(Screens.BottomSheet.route) {
             BottomSheet()
         }
-        composable(Screens.Test.route) {
-            Test()
+        composable(Screens.CustomPb.route) {
+            CustomPbScreen()
         }
         composable(Screens.NestedLazyList.route) {
             NestedLazyList()
         }
         composable(Screens.BottomAppBarWithFab.route) {
             BottomAppBarWithFab()
+        }
+        composable(Screens.CameraX.route) {
+            CameraScreen()
+        }
+        composable(Screens.Test.route) {
+            Test()
+        }
+        composable(Screens.NavDrawer.route) {
+            NavDrawerScreen()
         }
     }
 }
@@ -184,6 +196,10 @@ fun MainScreen(navController: NavController) {
     ) {
         item {
             MainItem(name = Screens.Login.route, navController)
+        }
+
+        item {
+            MainItem(name = Screens.Test.route, navController)
         }
 
         item {
@@ -233,13 +249,19 @@ fun MainScreen(navController: NavController) {
             MainItem(name = Screens.BottomSheet.route, navController = navController)
         }
         item {
-            MainItem(name = Screens.Test.route, navController = navController)
+            MainItem(name = Screens.CustomPb.route, navController = navController)
         }
         item {
             MainItem(name = Screens.NestedLazyList.route, navController = navController)
         }
         item {
             MainItem(name = Screens.BottomAppBarWithFab.route, navController = navController)
+        }
+        item {
+            MainItem(name = Screens.CameraX.route, navController = navController)
+        }
+        item {
+            MainItem(name = Screens.NavDrawer.route, navController = navController)
         }
     }
 }
@@ -310,6 +332,7 @@ fun SplashScreenAnimate(navController: NavController) {
 
 sealed class Screens(val route: String) {
     object MainScreen : Screens("Main")
+    object Test : Screens("Test")
     object SampleData : Screens("Sample List Data")
     object SampleDetail : Screens("Sample Detail")
     object GridData : Screens("Grid Data")
@@ -330,7 +353,9 @@ sealed class Screens(val route: String) {
     object SpinnerDateTimePicker : Screens("Spinner Date Time Picker")
     object ListWithSearch : Screens("List with search")
     object BottomSheet : Screens("Bottom Sheet")
-    object Test : Screens("Test")
+    object CustomPb : Screens("Custom pb")
     object NestedLazyList : Screens("Nested Lazy List")
     object BottomAppBarWithFab : Screens("Bottom AppBar With Fab")
+    object CameraX : Screens("CameraX")
+    object NavDrawer : Screens("NavDrawer")
 }

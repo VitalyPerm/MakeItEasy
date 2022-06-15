@@ -59,6 +59,7 @@ import com.elvitalya.makeiteasy.view.shimmer_animation.ShimmerAnimate
 import com.elvitalya.makeiteasy.view.spinner_date_time_picker.SpinnerScreen
 import com.elvitalya.makeiteasy.view.customPb.CustomPbScreen
 import com.elvitalya.makeiteasy.view.nav_drawer.NavDrawerScreen
+import com.elvitalya.makeiteasy.view.network_call_with_android_sdk.AndroidSdkNetworkCall
 import com.elvitalya.makeiteasy.view.swipe_to_reveal.SwipeToRevealScreen
 import com.elvitalya.makeiteasy.view.test.Test
 import com.google.gson.Gson
@@ -186,6 +187,9 @@ fun Navigation() {
         composable(Screens.SwipeToReveal.route) {
             SwipeToRevealScreen()
         }
+        composable(Screens.AndroidSdkNetworkCall.route) {
+            AndroidSdkNetworkCall()
+        }
     }
 }
 
@@ -269,6 +273,9 @@ fun MainScreen(navController: NavController) {
         }
         item {
             MainItem(name = Screens.SwipeToReveal.route, navController = navController)
+        }
+        item {
+            MainItem(name = Screens.AndroidSdkNetworkCall.route, navController = navController)
         }
     }
 }
@@ -366,4 +373,5 @@ sealed class Screens(val route: String) {
     object CameraX : Screens("CameraX")
     object NavDrawer : Screens("NavDrawer")
     object SwipeToReveal : Screens("Swipe To Reveal")
+    object AndroidSdkNetworkCall : Screens("AndroidSdk Network Call")
 }

@@ -4,6 +4,9 @@ import com.elvitalya.makeiteasy.view.mvvm_api_call_clearn_arch.model.UserRespons
 import com.elvitalya.makeiteasy.view.mvvm_api_call_clearn_arch.network.ApiInterface
 import com.elvitalya.makeiteasy.view.mvvm_api_call_clearn_arch.util.Resource
 import dagger.hilt.android.scopes.ActivityScoped
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import javax.inject.Inject
 
 @ActivityScoped

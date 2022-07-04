@@ -44,10 +44,10 @@ fun CustomPbScreen(
                 .align(Alignment.Center)
                 .padding(horizontal = 16.dp),
         ) {
-            ProgressLine(
-                vm.state,
-                verticalLine = vm.verticalLineState
-            )
+//            ProgressLine(
+//                vm.state,
+//                verticalLine = vm.verticalLineState
+//            )
 
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -100,8 +100,8 @@ fun CustomPbScreen(
 
 @Composable
 fun ProgressLine(
-    progress: Float = 0f,
     modifier: Modifier = Modifier,
+    progress: Float = 0f,
     verticalLine: List<Float>
 ) {
     Column(modifier = modifier) {

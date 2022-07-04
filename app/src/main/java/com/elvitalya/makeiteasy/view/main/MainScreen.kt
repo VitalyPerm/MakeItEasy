@@ -34,11 +34,13 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.elvitalya.makeiteasy.R
 import com.elvitalya.makeiteasy.view.alert_dialog.CallDialog
+import com.elvitalya.makeiteasy.view.bluetooth.BluetoothScreen
 import com.elvitalya.makeiteasy.view.bottom_app_bar_with_fab.BottomAppBarWithFab
 import com.elvitalya.makeiteasy.view.bottom_sheet.BottomSheet
 import com.elvitalya.makeiteasy.view.botton_nav.BottomNavigationScreen
 import com.elvitalya.makeiteasy.view.camera_capture.CameraScreen
 import com.elvitalya.makeiteasy.view.circular_progress_bar.CircularProgressBarScreen
+import com.elvitalya.makeiteasy.view.customPb.CustomPbScreen
 import com.elvitalya.makeiteasy.view.exoplayer.ExoPlayer
 import com.elvitalya.makeiteasy.view.expandable_list.ExpandableListScreen
 import com.elvitalya.makeiteasy.view.grid.GridData
@@ -50,16 +52,15 @@ import com.elvitalya.makeiteasy.view.login_screen.LoginScreen
 import com.elvitalya.makeiteasy.view.login_screen.RegisterScreen
 import com.elvitalya.makeiteasy.view.material_component.MaterialComponent
 import com.elvitalya.makeiteasy.view.mvvm_api_call_clearn_arch.view.CallApi
+import com.elvitalya.makeiteasy.view.nav_drawer.NavDrawerScreen
 import com.elvitalya.makeiteasy.view.nested_lazy_list.NestedLazyList
+import com.elvitalya.makeiteasy.view.network_call_with_android_sdk.AndroidSdkNetworkCall
 import com.elvitalya.makeiteasy.view.pick_image.ImagePicker
 import com.elvitalya.makeiteasy.view.sample_list.SampleData
 import com.elvitalya.makeiteasy.view.sample_list.SampleDataDetails
 import com.elvitalya.makeiteasy.view.sample_list.SampleList
 import com.elvitalya.makeiteasy.view.shimmer_animation.ShimmerAnimate
 import com.elvitalya.makeiteasy.view.spinner_date_time_picker.SpinnerScreen
-import com.elvitalya.makeiteasy.view.customPb.CustomPbScreen
-import com.elvitalya.makeiteasy.view.nav_drawer.NavDrawerScreen
-import com.elvitalya.makeiteasy.view.network_call_with_android_sdk.AndroidSdkNetworkCall
 import com.elvitalya.makeiteasy.view.swipe_to_reveal.SwipeToRevealScreen
 import com.elvitalya.makeiteasy.view.test.Test
 import com.google.gson.Gson
@@ -190,6 +191,9 @@ fun Navigation() {
         composable(Screens.AndroidSdkNetworkCall.route) {
             AndroidSdkNetworkCall()
         }
+        composable(Screens.BluetoothScan.route) {
+            BluetoothScreen()
+        }
     }
 }
 
@@ -276,6 +280,9 @@ fun MainScreen(navController: NavController) {
         }
         item {
             MainItem(name = Screens.AndroidSdkNetworkCall.route, navController = navController)
+        }
+        item {
+            MainItem(name = Screens.BluetoothScan.route, navController = navController)
         }
     }
 }
@@ -374,4 +381,5 @@ sealed class Screens(val route: String) {
     object NavDrawer : Screens("NavDrawer")
     object SwipeToReveal : Screens("Swipe To Reveal")
     object AndroidSdkNetworkCall : Screens("AndroidSdk Network Call")
+    object BluetoothScan : Screens("Bluetooth Scan")
 }

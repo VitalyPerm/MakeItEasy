@@ -1,66 +1,53 @@
 package com.elvitalya.makeiteasy.view.test
 
+import android.app.Application
+import android.graphics.Color
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.TextPaint
+import android.text.style.ClickableSpan
+import android.view.View
+import android.widget.Toast
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.random.Random
+
 
 @HiltViewModel
-class TestViewModel @Inject constructor() : ViewModel() {
+class TestViewModel @Inject constructor(
+    private val context: Application
+) : ViewModel() {
 
+    var progress by mutableStateOf<Long>(0)
 
-    var inWorkState = mutableStateListOf<FakeData>()
-    var newState = mutableStateListOf<FakeData>()
-    var finishedState = mutableStateListOf<FakeData>()
+    var pumpList = mutableStateListOf<Long>()
 
-    private suspend fun getList(): List<FakeData> {
-        delay(1000)
-        return listOf(
-            FakeData("Hello", "in_work"),
-            FakeData("Opa", "finished"),
-            FakeData("Hell", "in_work"),
-            FakeData("Puma", "new"),
-            FakeData("Pivo", "in_work"),
-            FakeData("Hee", "finished"),
-            FakeData("Hefdfdlo", "in_work"),
-            FakeData("Hellfdfdo", "new"),
-            FakeData("Hellgfgfo", "in_work"),
-            FakeData("Helgfgflo", "finished"),
-            FakeData("Hellgfgfo", "in_work"),
-            FakeData("Helgfgflo", "new"),
-            FakeData("Helgfgflo", "in_work"),
-            FakeData("Hegfgfllo", "finished"),
-            FakeData("Hegfgfllo", "in_work"),
-            FakeData("Helgfgflo", "new"),
-        )
+    fun tick() {
+        progress += 1
     }
 
-    private fun getLists() {
-        viewModelScope.launch {
-            val data = getList()
-            data.forEach {
-                when (it.type) {
-                    "in_work" -> inWorkState.add(it)
-                    "finished" -> finishedState.add(it)
-                    "new" -> newState.add(it)
-                }
-            }
-        }
+    fun pump() {
+        pumpList.add(progress)
+        pumpList.distinct()
     }
 
     init {
-        getLists()
+        viewModelScope.launch {
+            while (true){
+                tick()
+                delay(1000)
+            }
+        }
     }
-
-
 }
-
-
-data class FakeData(
-    val title: String,
-    val type: String
-)

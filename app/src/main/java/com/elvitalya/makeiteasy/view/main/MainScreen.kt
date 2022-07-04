@@ -47,6 +47,7 @@ import com.elvitalya.makeiteasy.view.grid.GridData
 import com.elvitalya.makeiteasy.view.grid.GridDetails
 import com.elvitalya.makeiteasy.view.grid.SampleGrid
 import com.elvitalya.makeiteasy.view.grid_shimmer.ShimmerGridAnimate
+import com.elvitalya.makeiteasy.view.heart_beat.HeartBeatScreen
 import com.elvitalya.makeiteasy.view.list_with_search.ListWithSearch
 import com.elvitalya.makeiteasy.view.login_screen.LoginScreen
 import com.elvitalya.makeiteasy.view.login_screen.RegisterScreen
@@ -194,6 +195,9 @@ fun Navigation() {
         composable(Screens.BluetoothScan.route) {
             BluetoothScreen()
         }
+        composable(Screens.HeartAnimation.route) {
+            HeartBeatScreen()
+        }
     }
 }
 
@@ -283,6 +287,9 @@ fun MainScreen(navController: NavController) {
         }
         item {
             MainItem(name = Screens.BluetoothScan.route, navController = navController)
+        }
+        item {
+            MainItem(name = Screens.HeartAnimation.route, navController = navController)
         }
     }
 }
@@ -382,4 +389,5 @@ sealed class Screens(val route: String) {
     object SwipeToReveal : Screens("Swipe To Reveal")
     object AndroidSdkNetworkCall : Screens("AndroidSdk Network Call")
     object BluetoothScan : Screens("Bluetooth Scan")
+    object HeartAnimation : Screens("Heart Animation")
 }

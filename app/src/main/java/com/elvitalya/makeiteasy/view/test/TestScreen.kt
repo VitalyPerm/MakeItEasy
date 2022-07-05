@@ -126,7 +126,7 @@ fun MyProgress(
             pumpPoint.forEach { pumpPoint ->
                 val point = (pumpPoint * 360 / target).toDouble() + 15f
 
-                Log.d("check___", "MyProgress: $point")
+
 
                 val x =
                     -(size.height.div(2f) * sin(Math.toRadians(point))).toFloat() + (size.width.div(
@@ -141,17 +141,10 @@ fun MyProgress(
                 )
             }
             drawIntoCanvas {
-                val x =
-                    -(size.height.div(2f) * sin(Math.toRadians(3.0))).toFloat() + (size.width.div(
-                        2f
-                    ))
-                val y =
-                    (size.height.div(2f) * cos(Math.toRadians(0.0))).toFloat() + (size.height / 2)
-
                 it.nativeCanvas.drawText(
                     progress.toString(),
-                    x,
-                    y,
+                    size.width / 2 - 20,
+                    size.height,
                     textPaint
                 )
             }
